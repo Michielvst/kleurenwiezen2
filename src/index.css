@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+.gamePicker {
+  background: #fff;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 2rem;
+  border: 2px solid #000;
+}
+
+.gamePicker input,
+.gamePicker button {
+  width: 100%;
+}
+.gamePicker input[type="text"],
+.gamePicker button[type="text"] {
+  text-align: center;
+  font-size: 3rem;
+}
+
+h1 {
+  font-family: 'blanchcaps_inline', sans-serif;
+  text-align: center;
+  font-weight: normal;
+  margin: 0;
+  font-size: 2em;
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  font-family: 'haymakerregular', sans-serif;
+}
+h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+h3 {
+  font-size: 3rem;
+}
