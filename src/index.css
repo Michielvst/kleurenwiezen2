@@ -55,3 +55,27 @@ h2 {
 h3 {
   font-size: 3rem;
 }
+
+
+table { 
+  border-spacing: 1; 
+  border-collapse: collapse; 
+  background:white;
+  border-radius:6px 6px 0 0;
+  overflow:hidden;
+  max-width:800px; 
+  width:100%;
+  margin:auto;
+  margin-top: 10vh;
+  position:relative;
+}
+
+thead {
+  background:rgb(199, 58, 58);
+}
+
+tbody {
+  background:grey;
+  border: solid black 1px;
+  text-align: center;
+}

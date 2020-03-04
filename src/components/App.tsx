@@ -12,7 +12,12 @@ class App extends React.Component<IState> {
   readonly state: IState = {
     players: {},
     currentGame: {
-      currentPlayers: {}
+      currentPlayers: {
+        jan: {},
+        jos: {},
+        wim: {},
+        kak: {}
+      }
     },
     points: {
       samen8: {
@@ -38,25 +43,25 @@ class App extends React.Component<IState> {
     }
   }
 
-  addPlayerToCurrentGame = (player: string) => {
-    const players = this.state.currentGame;
-    players[player] = {
-      scores: [],
-      going: false,
-      active: true
-    }
-    this.setState({
-      currentGame: {
-        currentPlayers: players
+  addPlayersToCurrentGame = (players: string[]) => {
+    const currentPlayers = players.reduce((acc: any, cur: any) => {
+      acc[cur] = {
+        scores: [],
+        going: false,
+        active: true
       }
-    })
+      return acc;
+    }, {});
+    this.setState({
+      currentGame: { currentPlayers }
+    });
   }
 
   render() {
     return (
       <div className="App">
-        <StartNewGame addPlayerToCurrentGame={this.addPlayerToCurrentGame} />
-        <CurrentGame />
+        <StartNewGame addPlayersToCurrentGame={this.addPlayersToCurrentGame} />
+        <CurrentGame currentGame={this.state.currentGame} />
       </div>
     );
   }

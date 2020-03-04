@@ -1,20 +1,20 @@
 import React from 'react';
 
 interface IProps {
-  addPlayerToCurrentGame: any; //waarom niet void?
+  addPlayersToCurrentGame: any; //waarom niet void?
 }
 
 class StartNewGame extends React.Component<IProps> {
+
   handleSubmit = (e: any) => {
     e.preventDefault();
-    const players: any = Array.from(e.currentTarget.elements).reduce((acc: any, cur: any) => {  //waarom niet string[]?
-      console.log(cur.type);
+    const players: any = Array.from(e.currentTarget.elements).reduce((acc: string[], cur: any) => {  //waarom niet string[]?
       if (cur.type === 'text') {
         acc.push(cur.value);
       }
       return acc;
     }, []);
-    players.map((el: any) => this.props.addPlayerToCurrentGame(el));
+    this.props.addPlayersToCurrentGame(players);
   }
 
   render() {
