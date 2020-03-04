@@ -15,23 +15,24 @@ class CurrentGame extends React.Component<IProps> {
 
   render() {
     return (
-      <table>
-        <thead>
-          <tr>
-            {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>
-              <th key={el}>{el}</th>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>
-              <td key={el}>0</td>
-            )}
-          </tr>
-        </tbody>
-      </table>
-
+      <>
+        <table>
+          <thead>
+            <tr>
+              {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>
+                <th key={el}>{el}</th>
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>
+                <td key={el}>0</td>
+              )}
+            </tr>
+          </tbody>
+        </table>
+      </>
     );
   }
 }

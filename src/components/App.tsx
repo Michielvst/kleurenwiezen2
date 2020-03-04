@@ -1,6 +1,7 @@
 import React from 'react';
 import CurrentGame from './CurrentGame';
 import StartNewGame from './StartNewGame';
+import ScoreCalculator from '../ScoreCalculator';
 
 interface IState {
   players: any;
@@ -62,6 +63,7 @@ class App extends React.Component<IState> {
       <div className="App">
         <StartNewGame addPlayersToCurrentGame={this.addPlayersToCurrentGame} />
         <CurrentGame currentGame={this.state.currentGame} />
+        <ScoreCalculator points={this.state.points} />
       </div>
     );
   }
