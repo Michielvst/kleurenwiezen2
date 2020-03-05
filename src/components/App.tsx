@@ -19,22 +19,22 @@ class App extends React.Component<IState> {
         jan: {
           active: true,
           going: false,
-          results: [10, -5, 15, 30]
+          scores: [10, -5, 15, 30]
         },
         jos: {
           active: true,
           going: false,
-          results: [10, -5, 15, 30]
+          scores: [10, -5, 15, 30]
         },
         wim: {
           active: true,
           going: false,
-          results: [10, -5, 15, 30]
+          scores: [10, -5, 15, 30]
         },
         kak: {
           active: true,
           going: false,
-          results: [10, -5, 15, 30]
+          scores: [10, -5, 15, 30]
         },
         //tijdelijk als voorbeeld
       }
@@ -85,7 +85,6 @@ class App extends React.Component<IState> {
   setScoreInputsState = (id: string, value: any) => {
     const scoreCalcInputs = this.state.scoreCalcInputs;
     scoreCalcInputs[id] = value
-    console.log(id, value);
     this.setState({
       scoreCalcInputs
     });
@@ -102,8 +101,9 @@ class App extends React.Component<IState> {
     })
   }
 
-  convertScoresInHTML = (scores: number[]) => { //kan eenvoudiger??
+  convertScoresInHTML = (scores: number[]) => { //kan eenvoudiger om html terug te geven??
     let totalScore = 0;
+    if (!scores) return
     return scores.map((el: any) => {
       totalScore += el;
       return <p>{totalScore}</p>
@@ -112,7 +112,55 @@ class App extends React.Component<IState> {
 
   renderScores = () => {
     const currentPlayers = this.state.currentGame.currentPlayers;
-    return Object.keys(currentPlayers).map((el: any) => <td key={el}>{this.convertScoresInHTML(currentPlayers[el].results)}</td>);
+    return Object.keys(currentPlayers).map((el: any) => <td key={el}>{this.convertScoresInHTML(currentPlayers[el].scores)}</td>);
+  }
+
+  checkIfValid = () => {
+    return true;
+  };
+
+  addScores = () => {
+    //arrays maken met going en not going spelers
+    let goingPlayers: any = [];    //going players ook in state steken?
+    let notGoingPlayers: any = [];
+    const currentPlayers = this.state.currentGame.currentPlayers;
+    Object.keys(currentPlayers).map((el: any) => {   //dubbele reduce?
+      this.state.currentGame.currentPlayers[el].going ? goingPlayers.push(el) : notGoingPlayers.push(el);
+    });
+    //info over spel en uitkomst in vars steken
+    const typeSpel = this.state.scoreCalcInputs.typeInput;
+    const aantalSlagen = this.state.scoreCalcInputs.slagenInput;
+    const isGeslaagd = this.state.scoreCalcInputs.geslaagdInput;
+    console.log(typeSpel, aantalSlagen, isGeslaagd, goingPlayers, notGoingPlayers);
+    //meerdere opties: spel waar aantal slagen van belang is of spel geslaagd of niet geslaagd
+    console.log(this.state.points[typeSpel].results.length);
+    const results = this.state.points[typeSpel].results;
+    // normaal spel
+    let soloOrSamen: number;
+    goingPlayers.length === 2 ? soloOrSamen = 1 : soloOrSamen = 3;
+    if (results.length === 14) {
+      goingPlayers.map((el: any) => {
+        currentPlayers[el].scores.push(results[aantalSlagen] * soloOrSamen);
+      });
+      notGoingPlayers.map((el: any) => {
+        currentPlayers[el].scores.push(results[aantalSlagen] * -1);
+      });
+      // specialeke
+    } else {
+      let geslaagd: number;
+      isGeslaagd === 'geslaagd' ? geslaagd = 1 : geslaagd = -1;
+      goingPlayers.map((el: any) => {
+        currentPlayers[el].scores.push(results * soloOrSamen * geslaagd);
+      });
+      notGoingPlayers.map((el: any) => {
+        currentPlayers[el].scores.push(results * -1 * geslaagd);
+      });
+    }
+    this.setState({
+      currentGame: {
+        currentPlayers
+      }
+    });
   }
 
   render() {
@@ -120,7 +168,7 @@ class App extends React.Component<IState> {
       <div className="App">
         <StartNewGame addPlayersToCurrentGame={this.addPlayersToCurrentGame} />
         <CurrentGame currentGame={this.state.currentGame} toggleNameGoing={this.toggleNameGoing} renderScores={this.renderScores} />
-        <ScoreCalculator points={this.state.points} setScoreInputsState={this.setScoreInputsState} />
+        <ScoreCalculator points={this.state.points} setScoreInputsState={this.setScoreInputsState} checkIfValid={this.checkIfValid} addScores={this.addScores} />
       </div>
     );
   }

@@ -3,6 +3,8 @@ import React from 'react';
 interface IProps {
   points: any; //waarom niet void?
   setScoreInputsState: any;
+  checkIfValid: any;
+  addScores: any;
 }
 
 class ScoreCalculator extends React.Component<IProps> {
@@ -28,10 +30,19 @@ class ScoreCalculator extends React.Component<IProps> {
     this.props.setScoreInputsState(e.currentTarget.id, e.currentTarget.value);
   }
 
+  submitScores = (e: any) => {
+    e.preventDefault();
+    if (!this.props.checkIfValid()) {
+      return;
+    };
+    console.log(e.currentTarget);
+    this.props.addScores();
+  }
+
   render() {
     return (
       <>
-        <form className='scoreCalc' >
+        <form className='scoreCalc' onSubmit={this.submitScores}>
           <select onChange={this.handleTypeChange} ref={this.typeRef} id='typeInput' >
             {Object.keys(this.props.points).map((el: any) => (
               <option value={el} key={el} >{el}</option>
