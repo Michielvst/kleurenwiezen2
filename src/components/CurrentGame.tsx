@@ -2,7 +2,8 @@ import React from 'react';
 
 interface IProps {
   currentGame: any;
-  toggleNameActive: any;
+  toggleNameGoing: any;
+  renderScores: any;
 }
 
 
@@ -17,8 +18,9 @@ class CurrentGame extends React.Component<IProps> {
   }
 
   handleNameClick = (e: any) => {
-    console.log(e.currentTarget.innerText);
-    this.props.toggleNameActive();
+    const target = e.currentTarget;
+    this.props.toggleNameGoing(target.innerText);
+    target.classList.toggle('going');
   }
 
   render() {
@@ -35,9 +37,7 @@ class CurrentGame extends React.Component<IProps> {
           </thead>
           <tbody>
             <tr>
-              {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>
-                <td key={el}>0</td>
-              )}
+              {this.props.renderScores()}
             </tr>
           </tbody>
         </table>

@@ -16,10 +16,27 @@ class App extends React.Component<IState> {
     currentGame: {
       currentPlayers: {
         //tijdelijk als voorbeeld
-        jan: {},
-        jos: {},
-        wim: {},
-        kak: {}
+        jan: {
+          active: true,
+          going: false,
+          results: [10, -5, 15, 30]
+        },
+        jos: {
+          active: true,
+          going: false,
+          results: [10, -5, 15, 30]
+        },
+        wim: {
+          active: true,
+          going: false,
+          results: [10, -5, 15, 30]
+        },
+        kak: {
+          active: true,
+          going: false,
+          results: [10, -5, 15, 30]
+        },
+        //tijdelijk als voorbeeld
       }
     },
     points: {
@@ -74,15 +91,35 @@ class App extends React.Component<IState> {
     });
   }
 
-  toggleNameActive = () => {
+  toggleNameGoing = (name: string) => {
+    console.log(name);
+    const currentPlayers = this.state.currentGame.currentPlayers;
+    currentPlayers[name].going = !currentPlayers[name].going;
+    this.setState({
+      currentGame: {
+        currentPlayers
+      }
+    })
+  }
 
+  convertScoresInHTML = (scores: number[]) => { //kan eenvoudiger??
+    let totalScore = 0;
+    return scores.map((el: any) => {
+      totalScore += el;
+      return <p>{totalScore}</p>
+    });
+  }
+
+  renderScores = () => {
+    const currentPlayers = this.state.currentGame.currentPlayers;
+    return Object.keys(currentPlayers).map((el: any) => <td key={el}>{this.convertScoresInHTML(currentPlayers[el].results)}</td>);
   }
 
   render() {
     return (
       <div className="App">
         <StartNewGame addPlayersToCurrentGame={this.addPlayersToCurrentGame} />
-        <CurrentGame currentGame={this.state.currentGame} toggleNameActive={this.toggleNameActive} />
+        <CurrentGame currentGame={this.state.currentGame} toggleNameGoing={this.toggleNameGoing} renderScores={this.renderScores} />
         <ScoreCalculator points={this.state.points} setScoreInputsState={this.setScoreInputsState} />
       </div>
     );
