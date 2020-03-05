@@ -22,6 +22,23 @@ code {
   border: 2px solid #000;
 }
 
+.startGame {
+  background: #fff;
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 1rem;
+}
+
+.scoreCalc {
+  background: #fff;
+  max-width: 350px;
+  margin: 10px auto;
+  padding: 0.3rem;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+}
+
 .gamePicker input,
 .gamePicker button {
   width: 100%;
@@ -49,8 +66,7 @@ h6 {
 }
 h2 {
   text-align: center;
-  margin-top: 0;
-  margin-bottom: 2rem;
+  margin: 0;
 }
 h3 {
   font-size: 3rem;
@@ -65,13 +81,19 @@ table {
   overflow:hidden;
   max-width:800px; 
   width:100%;
-  margin:auto;
-  margin-top: 10vh;
+  margin: 20px auto;
   position:relative;
+}
+
+th {
+  width: 20%;
 }
 
 thead {
   background:rgb(199, 58, 58);
+  border-radius:6px 6px 0 0;
+  border: solid black 1px;
+
 }
 
 tbody {

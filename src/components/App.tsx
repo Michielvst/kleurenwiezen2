@@ -6,7 +6,8 @@ import ScoreCalculator from '../ScoreCalculator';
 interface IState {
   players: any;
   currentGame: any;
-  points: any
+  points: any;
+  scoreCalcInputs: any;
 }
 
 class App extends React.Component<IState> {
@@ -14,6 +15,7 @@ class App extends React.Component<IState> {
     players: {},
     currentGame: {
       currentPlayers: {
+        //tijdelijk als voorbeeld
         jan: {},
         jos: {},
         wim: {},
@@ -41,6 +43,11 @@ class App extends React.Component<IState> {
         results: 36,
         amountOfPlayers: 'nvt'
       }
+    },
+    scoreCalcInputs: {
+      typeInput: 'samen8',
+      slagenInput: 0,
+      geslaagdInput: 'geslaagd'
     }
   }
 
@@ -58,12 +65,25 @@ class App extends React.Component<IState> {
     });
   }
 
+  setScoreInputsState = (id: string, value: any) => {
+    const scoreCalcInputs = this.state.scoreCalcInputs;
+    scoreCalcInputs[id] = value
+    console.log(id, value);
+    this.setState({
+      scoreCalcInputs
+    });
+  }
+
+  toggleNameActive = () => {
+
+  }
+
   render() {
     return (
       <div className="App">
         <StartNewGame addPlayersToCurrentGame={this.addPlayersToCurrentGame} />
-        <CurrentGame currentGame={this.state.currentGame} />
-        <ScoreCalculator points={this.state.points} />
+        <CurrentGame currentGame={this.state.currentGame} toggleNameActive={this.toggleNameActive} />
+        <ScoreCalculator points={this.state.points} setScoreInputsState={this.setScoreInputsState} />
       </div>
     );
   }

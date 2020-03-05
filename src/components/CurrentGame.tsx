@@ -2,7 +2,10 @@ import React from 'react';
 
 interface IProps {
   currentGame: any;
+  toggleNameActive: any;
 }
+
+
 
 class CurrentGame extends React.Component<IProps> {
   isEmpty = (obj: any) => {
@@ -13,14 +16,20 @@ class CurrentGame extends React.Component<IProps> {
     return true;
   }
 
+  handleNameClick = (e: any) => {
+    console.log(e.currentTarget.innerText);
+    this.props.toggleNameActive();
+  }
+
   render() {
     return (
       <>
+        <h2>Huidig Spel</h2>
         <table>
           <thead>
             <tr>
               {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>
-                <th key={el}>{el}</th>
+                <th key={el} onClick={this.handleNameClick}>{el}</th>
               )}
             </tr>
           </thead>

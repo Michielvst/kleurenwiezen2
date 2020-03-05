@@ -19,7 +19,8 @@ class StartNewGame extends React.Component<IProps> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className='startGame' >
+        <h2>Geef spelernamen:</h2><br></br>
         <input type="text" required />
         <input type="text" required />
         <input type="text" required />
