@@ -2,6 +2,7 @@ import React from 'react';
 import CurrentGame from './CurrentGame';
 import StartNewGame from './StartNewGame';
 import ScoreCalculator from '../ScoreCalculator';
+import LeaderBoards from './LeaderBoard';
 
 interface IState {
   players: any;
@@ -12,7 +13,24 @@ interface IState {
 
 class App extends React.Component<IState> {
   readonly state: IState = {
-    players: {},
+    players: {
+      Miguel: {
+        totScore: 100,
+        gamesPlayed: 20
+      },
+      Jangen: {
+        totScore: -50,
+        gamesPlayed: 22
+      },
+      Jarrku: {
+        totScore: 5,
+        gamesPlayed: 9
+      },
+      Jengen: {
+        totScore: -500,
+        gamesPlayed: 12
+      },
+    },
     currentGame: {
       currentPlayers: {
         //tijdelijk als voorbeeld
@@ -145,7 +163,7 @@ class App extends React.Component<IState> {
       notGoingPlayers.map((el: any) => {
         currentPlayers[el].scores.push(results[aantalSlagen] * -1);
       });
-      // specialeke
+      // specialekes
     } else {
       let geslaagd: number;
       isGeslaagd === 'geslaagd' ? geslaagd = 1 : geslaagd = -1;
@@ -169,6 +187,7 @@ class App extends React.Component<IState> {
         <StartNewGame addPlayersToCurrentGame={this.addPlayersToCurrentGame} />
         <CurrentGame currentGame={this.state.currentGame} toggleNameGoing={this.toggleNameGoing} renderScores={this.renderScores} />
         <ScoreCalculator points={this.state.points} setScoreInputsState={this.setScoreInputsState} checkIfValid={this.checkIfValid} addScores={this.addScores} />
+        <LeaderBoards players={this.state.players} />
       </div>
     );
   }
