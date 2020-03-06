@@ -27,7 +27,7 @@ class CurrentGame extends React.Component<IProps> {
     return (
       <>
         <h2>Huidig Spel</h2>
-        <table>
+        <table className='currentGameTable'>
           <thead>
             <tr>
               {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>

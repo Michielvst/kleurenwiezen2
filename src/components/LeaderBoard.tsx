@@ -6,6 +6,16 @@ interface IProps {
 
 
 class LeaderBoards extends React.Component<IProps> {
+  topColors = (rang: any) => {
+    if (rang === 1) {
+      return { backgroundColor: "gold" };
+    } else if (rang === 2) {
+      return { backgroundColor: "silver" };
+    } else if (rang === 3) {
+      return { backgroundColor: "#cd7f32" };
+    }
+  }
+
   renderLeaderBoard = (): any => {
     const players = this.props.players;
     const playersSorted = Object.keys(players).sort((a: any, b: any) => {
@@ -13,7 +23,7 @@ class LeaderBoards extends React.Component<IProps> {
     })
     return playersSorted.map((el: string) => {
       return <tr>
-        <td>{playersSorted.indexOf(el) + 1}</td>
+        <td style={this.topColors(playersSorted.indexOf(el) + 1)}>{playersSorted.indexOf(el) + 1}</td>
         <td>{el}</td>
         <td>{players[el].totScore}</td>
         <td>{players[el].gamesPlayed}</td>
@@ -24,22 +34,22 @@ class LeaderBoards extends React.Component<IProps> {
 
   render() {
     return (
-      <>
+      <div className='leaderboard'>
         <h2>Leaderboard</h2>
-        <table>
+        <table className='leaderboardTable'>
           <thead>
             <tr>
-              <th>
+              <th className='rang'>
                 Rang
               </th>
               <th>
                 Speler
               </th>
-              <th>
+              <th className='score'>
                 Score
               </th>
-              <th>
-                Spellen Gespeeld
+              <th className='spellenGespeeld'>
+                Gespeeld
               </th>
             </tr>
           </thead>
@@ -47,7 +57,7 @@ class LeaderBoards extends React.Component<IProps> {
             {this.renderLeaderBoard()}
           </tbody>
         </table>
-      </>
+      </div>
     );
   }
 }

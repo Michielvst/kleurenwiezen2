@@ -34,26 +34,7 @@ class App extends React.Component<IState> {
     currentGame: {
       currentPlayers: {
         //tijdelijk als voorbeeld
-        jan: {
-          active: true,
-          going: false,
-          scores: [10, -5, 15, 30]
-        },
-        jos: {
-          active: true,
-          going: false,
-          scores: [10, -5, 15, 30]
-        },
-        wim: {
-          active: true,
-          going: false,
-          scores: [10, -5, 15, 30]
-        },
-        kak: {
-          active: true,
-          going: false,
-          scores: [10, -5, 15, 30]
-        },
+
         //tijdelijk als voorbeeld
       }
     },
@@ -86,12 +67,15 @@ class App extends React.Component<IState> {
     }
   }
 
+  // StartNewGame functies
+
   addPlayersToCurrentGame = (players: string[]) => {
     const currentPlayers = players.reduce((acc: any, cur: any) => {
       acc[cur] = {
         scores: [],
         going: false,
-        active: true
+        active: true,
+        amountOfGames: 0
       }
       return acc;
     }, {});
@@ -100,13 +84,7 @@ class App extends React.Component<IState> {
     });
   }
 
-  setScoreInputsState = (id: string, value: any) => {
-    const scoreCalcInputs = this.state.scoreCalcInputs;
-    scoreCalcInputs[id] = value
-    this.setState({
-      scoreCalcInputs
-    });
-  }
+  // CurrentGame functies
 
   toggleNameGoing = (name: string) => {
     console.log(name);
@@ -131,6 +109,49 @@ class App extends React.Component<IState> {
   renderScores = () => {
     const currentPlayers = this.state.currentGame.currentPlayers;
     return Object.keys(currentPlayers).map((el: any) => <td key={el}>{this.convertScoresInHTML(currentPlayers[el].scores)}</td>);
+  }
+
+  // ScoreCalculator functies
+
+  resetCurrentGame = () => {
+    this.setState({
+      currentGame: {
+        currentPlayers: {
+        }
+      }
+    });
+  }
+
+  addScoresToLeaderboard = () => {
+    const players = this.state.players;
+    console.log(players);
+    const currentPlayers = this.state.currentGame.currentPlayers;
+    Object.keys(currentPlayers).map((el: any) => {
+      console.log(el);
+      console.log(this.totScore(el));
+      const amountOfGames = currentPlayers[el].amountOfGames
+      const score = this.totScore(el) + amountOfGames;
+      if (players[el]) {
+        players[el].totScore += score;
+        players[el].amountOfGames += amountOfGames;
+      } else {
+        players[el] = {
+          totScore: score,
+          gamesPlayed: amountOfGames
+        }
+      }
+    })
+    this.setState({
+      players
+    });
+  }
+
+  setScoreInputsState = (id: string, value: any) => {
+    const scoreCalcInputs = this.state.scoreCalcInputs;
+    scoreCalcInputs[id] = value
+    this.setState({
+      scoreCalcInputs
+    });
   }
 
   checkIfValid = () => {
@@ -174,6 +195,9 @@ class App extends React.Component<IState> {
         currentPlayers[el].scores.push(results * -1 * geslaagd);
       });
     }
+    Object.keys(currentPlayers).map((el: any) => {
+      currentPlayers[el].amountOfGames += 1;
+    });
     this.setState({
       currentGame: {
         currentPlayers
@@ -181,12 +205,38 @@ class App extends React.Component<IState> {
     });
   }
 
+  // Algemene functies
+
+  totScore = (player: string) => {
+    const currentPlayer = this.state.currentGame.currentPlayers[player];
+    console.log(currentPlayer.scores.length);
+    if (currentPlayer.scores.length === 0) {
+      return;
+    }
+    return currentPlayer.scores.reduce((acc: any, cur: any) => {
+      acc += cur;
+      return acc;
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <StartNewGame addPlayersToCurrentGame={this.addPlayersToCurrentGame} />
-        <CurrentGame currentGame={this.state.currentGame} toggleNameGoing={this.toggleNameGoing} renderScores={this.renderScores} />
-        <ScoreCalculator points={this.state.points} setScoreInputsState={this.setScoreInputsState} checkIfValid={this.checkIfValid} addScores={this.addScores} />
+        <CurrentGame
+          currentGame={this.state.currentGame}
+          toggleNameGoing={this.toggleNameGoing}
+          renderScores={this.renderScores} />
+        <ScoreCalculator
+          points={this.state.points}
+          currentGame={this.state.currentGame}
+          addScoresToLeaderboard={this.addScoresToLeaderboard}
+          setScoreInputsState={this.setScoreInputsState}
+          checkIfValid={this.checkIfValid}
+          totScore={this.totScore}
+          addScores={this.addScores}
+          resetCurrentGame={this.resetCurrentGame}
+        />
         <LeaderBoards players={this.state.players} />
       </div>
     );

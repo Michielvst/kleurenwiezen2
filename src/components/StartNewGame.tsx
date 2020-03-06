@@ -15,12 +15,13 @@ class StartNewGame extends React.Component<IProps> {
       return acc;
     }, []);
     this.props.addPlayersToCurrentGame(players);
+    e.currentTarget.reset();
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit} className='startGame' >
-        <h2>Geef spelernamen:</h2><br></br>
+        <h2>Geef spelersnamen:</h2><br></br>
         <input type="text" required />
         <input type="text" required />
         <input type="text" required />

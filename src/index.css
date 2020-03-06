@@ -29,17 +29,6 @@ code {
   padding: 1rem;
 }
 
-.scoreCalc {
-  background: #fff;
-  max-width: 350px;
-  margin: 10px auto;
-  margin-bottom: 80px;
-  padding: 0.3rem;
-  border: 2px solid #000;
-  display: flex;
-  justify-content: center;
-}
-
 .going {
   color: blue;
 }
@@ -77,20 +66,20 @@ h3 {
   font-size: 3rem;
 }
 
-
-table { 
-  border-spacing: 1; 
-  border-collapse: collapse; 
-  background:white;
-  overflow:hidden;
-  max-width:800px; 
-  width:100%;
-  margin: 20px auto;
-  position:relative;
+.currentGameTable th {
+  width: 25%;
 }
 
-th {
-  width: 20%;
+.rang {
+  width: 50px;
+}
+
+.score {
+  width: 50px;
+}
+
+.spellenGespeeld {
+  width: 100px;
 }
 
 thead {
@@ -104,4 +93,66 @@ tbody {
   background:grey;
   border: solid black 1px;
   text-align: center;
+}
+
+.currentGameTable {
+  border-spacing: 1; 
+  border-collapse: collapse; 
+  background:white;
+  overflow:hidden;
+  max-width:800px; 
+  width:100%;
+  margin: 20px auto;
+  position:relative;
+}
+
+.leaderboardTable {
+  border-spacing: 1; 
+  border-collapse: collapse; 
+  background:white;
+  overflow:hidden;
+  max-width: 350px; 
+  width:100%;
+  margin: 20px auto;
+  position:relative;
+}
+
+.endGameButton {
+  background: #fff;
+  max-width: 100px;
+  margin: 10px auto;
+}
+
+.scoreCalc {
+  background: #fff;
+  max-width: 285px;
+  margin: 10px auto;
+  margin-bottom: 10px;
+  padding: 0.3rem;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+}
+
+.scoreCalc input {
+  width: 73px;
+}
+
+.leaderboard {
+  margin-top: 100px;
+}
+
+.endGameModal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  max-width: 500px; /* Full width */
+  min-width: 400px;
+  max-height: 500px; /* Full height */
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 25%;
+  text-align: center;
+  padding: 2rem;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(204, 56, 56, 0.85); /* Fallback color */  
 }
