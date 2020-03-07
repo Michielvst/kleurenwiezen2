@@ -134,6 +134,12 @@ tbody {
   justify-content: center;
 }
 
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .scoreCalc input {
   width: 73px;
 }
@@ -152,7 +158,13 @@ tbody {
   transform: translate(-50%, 0);
   top: 25%;
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(204, 56, 56, 0.85); /* Fallback color */  
+}
+
+.xButton {
+  position: fixed;
+  top: 5px;
+  right: 5px;
 }

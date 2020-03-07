@@ -3,6 +3,7 @@ import CurrentGame from './CurrentGame';
 import StartNewGame from './StartNewGame';
 import ScoreCalculator from '../ScoreCalculator';
 import LeaderBoards from './LeaderBoard';
+import base from '../base';
 
 interface IState {
   players: any;
@@ -11,8 +12,8 @@ interface IState {
   scoreCalcInputs: any;
 }
 
-class App extends React.Component<IState> {
-  readonly state: IState = {
+class App extends React.Component<any> { //voor match???
+  readonly state: any = {
     players: {
       Miguel: {
         totScore: 100,
@@ -23,7 +24,7 @@ class App extends React.Component<IState> {
         gamesPlayed: 22
       },
       Jarrku: {
-        totScore: 5,
+        totScore: 56,
         gamesPlayed: 9
       },
       Jengen: {
@@ -34,7 +35,30 @@ class App extends React.Component<IState> {
     currentGame: {
       currentPlayers: {
         //tijdelijk als voorbeeld
-
+        wim: {
+          active: true,
+          amountOfGames: 0,
+          going: false,
+          scores: [0, 7, -3]
+        },
+        jos: {
+          active: true,
+          amountOfGames: 0,
+          going: false,
+          scores: [0, -7, -3]
+        },
+        kak: {
+          active: true,
+          amountOfGames: 0,
+          going: false,
+          scores: [0, 7, 3]
+        },
+        dep: {
+          active: true,
+          amountOfGames: 0,
+          going: false,
+          scores: [0, -7, 3]
+        },
         //tijdelijk als voorbeeld
       }
     },
@@ -47,24 +71,88 @@ class App extends React.Component<IState> {
         results: [-39, -34, -31, -28, -25, -22, -19, -16, -13, 10, 13, 16, 19, 30],
         amountOfPlayers: 2
       },
+      samen10: {
+        results: [-45, -42, -39, -34, -31, -28, -25, -22, -19, -16, 13, 16, 19, 30],
+        amountOfPlayers: 2
+      },
+      samen11: {
+        results: [-51, -48, -45, -42, -39, -34, -31, -28, -25, -22, -19, 16, 19, 30],
+        amountOfPlayers: 2
+      },
+      samen12: {
+        results: [-57, -54, -51, -48, -45, -42, -39, -34, -31, -28, -25, -22, 19, 30],
+        amountOfPlayers: 2
+      },
+      samen13: {
+        results: [-63, -60, -57, -54, -51, -48, -45, -42, -39, -34, -31, -28, -25, 30],
+        amountOfPlayers: 2
+      },
       solo6: {
         results: [-30, -27, -24, -21, -18, -15, 12, 15, 18, 18, 18, 18, 18, 18],
         amountOfPlayers: 1
+      },
+      solo7: {
+        results: [-36, -33, -30, -27, -24, -21, -18, 15, 18, 18, 18, 18, 18, 18],
+        amountOfPlayers: 1
+      },
+      solo8: {
+        results: [-45, -42, -39, -36, -33, -30, -27, -24, 21, 21, 21, 21, 21, 21],
+        amountOfPlayers: 1
+      },
+      piccolo: {
+        results: 24,
+        amountOfPlayers: 'nvt'
+      },
+      kleinemiserie: {
+        results: 18,
+        amountOfPlayers: 'nvt'
+      },
+      troel: {
+        results: 13,
+        amountOfPlayers: 2
       },
       abondance9: {
         results: 32,
         amountOfPlayers: 1
       },
+      abondance10: {
+        results: 42,
+        amountOfPlayers: 1
+      },
+      abondance11: {
+        results: 60,
+        amountOfPlayers: 1
+      },
       grotemiserie: {
         results: 36,
         amountOfPlayers: 'nvt'
-      }
+      },
+      blotemiserie: {
+        results: 75,
+        amountOfPlayers: 'nvt'
+      },
+      kleinesoloslim: {
+        results: 100,
+        amountOfPlayers: 1
+      },
+      grotesoloslim: {
+        results: 200,
+        amountOfPlayers: 1
+      },
     },
     scoreCalcInputs: {
       typeInput: 'samen8',
       slagenInput: 0,
       geslaagdInput: 'geslaagd'
     }
+  }
+
+  componentDidMount() {
+    const { params } = this.props.match;
+    //this.ref = base.syncState(`${params.gameId}`, {
+    //  context: this,
+    //  state: this.state
+    //});
   }
 
   // StartNewGame functies
@@ -102,7 +190,7 @@ class App extends React.Component<IState> {
     if (!scores) return
     return scores.map((el: any) => {
       totalScore += el;
-      return <p>{totalScore}</p>
+      return <p key={el}>{totalScore}</p>
     });
   }
 
@@ -131,9 +219,11 @@ class App extends React.Component<IState> {
       console.log(this.totScore(el));
       const amountOfGames = currentPlayers[el].amountOfGames
       const score = this.totScore(el) + amountOfGames;
+
       if (players[el]) {
+        console.log(score, amountOfGames, players[el].amountOfGames);
         players[el].totScore += score;
-        players[el].amountOfGames += amountOfGames;
+        players[el].gamesPlayed += amountOfGames;
       } else {
         players[el] = {
           totScore: score,
@@ -155,8 +245,18 @@ class App extends React.Component<IState> {
   }
 
   checkIfValid = () => {
-    return true;
+    const typeInput = this.state.scoreCalcInputs.typeInput;
+    const amount = this.state.points[typeInput].amountOfPlayers;
+    const goingPlayers = Object.keys(this.state.currentGame.currentPlayers).filter((el: any) => {
+      return this.state.currentGame.currentPlayers[el].going === true;
+    });
+    if (goingPlayers.length === amount || amount === 'nvt') {
+      return true;
+    }
+    console.log(typeInput, amount, goingPlayers);
+    return false;
   };
+
 
   addScores = () => {
     //arrays maken met going en not going spelers
@@ -170,9 +270,7 @@ class App extends React.Component<IState> {
     const typeSpel = this.state.scoreCalcInputs.typeInput;
     const aantalSlagen = this.state.scoreCalcInputs.slagenInput;
     const isGeslaagd = this.state.scoreCalcInputs.geslaagdInput;
-    console.log(typeSpel, aantalSlagen, isGeslaagd, goingPlayers, notGoingPlayers);
     //meerdere opties: spel waar aantal slagen van belang is of spel geslaagd of niet geslaagd
-    console.log(this.state.points[typeSpel].results.length);
     const results = this.state.points[typeSpel].results;
     // normaal spel
     let soloOrSamen: number;
@@ -209,7 +307,6 @@ class App extends React.Component<IState> {
 
   totScore = (player: string) => {
     const currentPlayer = this.state.currentGame.currentPlayers[player];
-    console.log(currentPlayer.scores.length);
     if (currentPlayer.scores.length === 0) {
       return;
     }

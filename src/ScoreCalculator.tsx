@@ -40,9 +40,9 @@ class ScoreCalculator extends React.Component<IProps> {
   submitScores = (e: any) => {
     e.preventDefault();
     if (!this.props.checkIfValid()) {
+      window.alert('Aantal spelers klopt niet!');
       return;
     };
-    console.log(e.currentTarget);
     this.props.addScores();
   }
 
@@ -64,7 +64,8 @@ class ScoreCalculator extends React.Component<IProps> {
 
   render() {
     return (
-      <>
+      <div className='flex'>
+        <a href="https://nl.wikipedia.org/wiki/Kleurenwiezen" target='_blank' className='wikilink'>Spelregels en puntenrooster</a>
         <form className='scoreCalc' onSubmit={this.submitScores}>
           <select onChange={this.handleTypeChange} ref={this.typeRef} id='typeInput' >
             {Object.keys(this.props.points).map((el: any) => (
@@ -89,15 +90,15 @@ class ScoreCalculator extends React.Component<IProps> {
         </div>
         <div ref={this.endModalRef} hidden className='endGameModal' >
           <p>Zeker dat je dit spel wil beëindigen?</p>
-          <button onClick={this.restoreEndGameButton}>x</button>
-          <p>
+          <button onClick={this.restoreEndGameButton} className='xButton'>x</button>
+          <div>
             {Object.keys(this.props.currentGame.currentPlayers).map((el: any) => {
-              return <p>{el}: Totaalscore {this.props.totScore(el)} + Participatiebonus {this.props.currentGame.currentPlayers[el].amountOfGames} = {this.props.totScore(el) + this.props.currentGame.currentPlayers[el].amountOfGames}</p>;
+              return <p key={el}>{el}: Totaalscore {this.props.totScore(el)} + Participatiebonus {this.props.currentGame.currentPlayers[el].amountOfGames} = {this.props.totScore(el) + this.props.currentGame.currentPlayers[el].amountOfGames}</p>;
             })}
-          </p>
+          </div>
           <button onClick={this.handleAddToLeaderboardButton}>Toevoegen aan leaderboard</button>
         </div>
-      </>
+      </div>
     )
   }
 }

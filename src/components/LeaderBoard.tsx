@@ -22,7 +22,7 @@ class LeaderBoards extends React.Component<IProps> {
       return players[b].totScore - players[a].totScore;
     })
     return playersSorted.map((el: string) => {
-      return <tr>
+      return <tr key={el}>
         <td style={this.topColors(playersSorted.indexOf(el) + 1)}>{playersSorted.indexOf(el) + 1}</td>
         <td>{el}</td>
         <td>{players[el].totScore}</td>
