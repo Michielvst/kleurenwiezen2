@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 
 interface Props extends RouteComponentProps {}
 
-export default function GamePicker2({ history }: Props) {
+export default function GamePicker({ history }: Props) {
   const [gameName, setGameName] = React.useState("");
 
   return (
