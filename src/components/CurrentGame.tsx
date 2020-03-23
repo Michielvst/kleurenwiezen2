@@ -1,49 +1,48 @@
-import React from 'react';
+import React from "react";
 
 interface IProps {
-  currentGame: any;
-  toggleNameGoing: any;
-  renderScores: any;
+  currentGame: {
+    currentPlayers: {
+      [name: string]: {
+        active: boolean;
+        amountOfGames: number;
+        going: boolean;
+        scores: number[];
+      };
+    };
+  };
+  toggleNameGoing: (name: string) => void;
+  renderScores: () => JSX.Element[];
 }
 
-
-
-class CurrentGame extends React.Component<IProps> {
-  isEmpty = (obj: any) => {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
-  handleNameClick = (e: any) => {
-    const target = e.currentTarget;
-    this.props.toggleNameGoing(target.innerText);
-    target.classList.toggle('going');
-  }
-
-  render() {
-    return (
-      <>
-        <h2>Huidig Spel</h2>
-        <table className='currentGameTable'>
-          <thead>
-            <tr>
-              {Object.keys(this.props.currentGame.currentPlayers).map((el: any) =>
-                <th key={el} onClick={this.handleNameClick}>{el}</th>
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {this.props.renderScores()}
-            </tr>
-          </tbody>
-        </table>
-      </>
-    );
-  }
+export default function CurrentGame2({
+  currentGame,
+  toggleNameGoing,
+  renderScores
+}: IProps) {
+  return (
+    <>
+      <h2>Huidig Spel</h2>
+      <table className="currentGameTable">
+        <thead>
+          <tr>
+            {Object.entries(currentGame.currentPlayers).map(
+              ([name, player]) => (
+                <th
+                  className={player.going ? "going" : undefined}
+                  key={name}
+                  onClick={() => toggleNameGoing(name)}
+                >
+                  {name}
+                </th>
+              )
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>{renderScores()}</tr>
+        </tbody>
+      </table>
+    </>
+  );
 }
-
-export default CurrentGame;
