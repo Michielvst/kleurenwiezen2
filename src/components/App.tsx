@@ -1,10 +1,12 @@
-import React from 'react';
-import CurrentGame from './CurrentGame';
-import StartNewGame from './StartNewGame';
-import ScoreCalculator from '../ScoreCalculator';
-import LeaderBoards from './LeaderBoard';
-import base from '../base';
+import React from "react";
+import CurrentGame from "./CurrentGame";
+import StartNewGame from "./StartNewGame";
+import ScoreCalculator from "./ScoreCalculator";
+import LeaderBoards from "./LeaderBoard";
+import { points } from "./types";
+import base from "../base";
 
+console.log(points);
 interface IState {
   players: any;
   currentGame: any;
@@ -12,7 +14,8 @@ interface IState {
   scoreCalcInputs: any;
 }
 
-class App extends React.Component<any> { //voor match???
+class App extends React.Component<any> {
+  //voor match???
   readonly state: any = {
     players: {
       Miguel: {
@@ -30,7 +33,7 @@ class App extends React.Component<any> { //voor match???
       Jengen: {
         totScore: -500,
         gamesPlayed: 12
-      },
+      }
     },
     currentGame: {
       currentPlayers: {
@@ -58,94 +61,16 @@ class App extends React.Component<any> { //voor match???
           amountOfGames: 0,
           going: false,
           scores: [0, -7, 3]
-        },
+        }
         //tijdelijk als voorbeeld
       }
     },
-    points: {
-      samen8: {
-        results: [-31, -28, -25, -22, -19, -16, -13, -10, 7, 10, 13, 16, 19, 30],
-        amountOfPlayers: 2
-      },
-      samen9: {
-        results: [-39, -34, -31, -28, -25, -22, -19, -16, -13, 10, 13, 16, 19, 30],
-        amountOfPlayers: 2
-      },
-      samen10: {
-        results: [-45, -42, -39, -34, -31, -28, -25, -22, -19, -16, 13, 16, 19, 30],
-        amountOfPlayers: 2
-      },
-      samen11: {
-        results: [-51, -48, -45, -42, -39, -34, -31, -28, -25, -22, -19, 16, 19, 30],
-        amountOfPlayers: 2
-      },
-      samen12: {
-        results: [-57, -54, -51, -48, -45, -42, -39, -34, -31, -28, -25, -22, 19, 30],
-        amountOfPlayers: 2
-      },
-      samen13: {
-        results: [-63, -60, -57, -54, -51, -48, -45, -42, -39, -34, -31, -28, -25, 30],
-        amountOfPlayers: 2
-      },
-      solo6: {
-        results: [-30, -27, -24, -21, -18, -15, 12, 15, 18, 18, 18, 18, 18, 18],
-        amountOfPlayers: 1
-      },
-      solo7: {
-        results: [-36, -33, -30, -27, -24, -21, -18, 15, 18, 18, 18, 18, 18, 18],
-        amountOfPlayers: 1
-      },
-      solo8: {
-        results: [-45, -42, -39, -36, -33, -30, -27, -24, 21, 21, 21, 21, 21, 21],
-        amountOfPlayers: 1
-      },
-      piccolo: {
-        results: 24,
-        amountOfPlayers: 'nvt'
-      },
-      kleinemiserie: {
-        results: 18,
-        amountOfPlayers: 'nvt'
-      },
-      troel: {
-        results: 13,
-        amountOfPlayers: 2
-      },
-      abondance9: {
-        results: 32,
-        amountOfPlayers: 1
-      },
-      abondance10: {
-        results: 42,
-        amountOfPlayers: 1
-      },
-      abondance11: {
-        results: 60,
-        amountOfPlayers: 1
-      },
-      grotemiserie: {
-        results: 36,
-        amountOfPlayers: 'nvt'
-      },
-      blotemiserie: {
-        results: 75,
-        amountOfPlayers: 'nvt'
-      },
-      kleinesoloslim: {
-        results: 100,
-        amountOfPlayers: 1
-      },
-      grotesoloslim: {
-        results: 200,
-        amountOfPlayers: 1
-      },
-    },
     scoreCalcInputs: {
-      typeInput: 'samen8',
+      typeInput: "samen8",
       slagenInput: 0,
-      geslaagdInput: 'geslaagd'
+      geslaagdInput: "geslaagd"
     }
-  }
+  };
 
   componentDidMount() {
     const { params } = this.props.match;
@@ -164,13 +89,13 @@ class App extends React.Component<any> { //voor match???
         going: false,
         active: true,
         amountOfGames: 0
-      }
+      };
       return acc;
     }, {});
     this.setState({
       currentGame: { currentPlayers }
     });
-  }
+  };
 
   // CurrentGame functies
 
@@ -182,33 +107,35 @@ class App extends React.Component<any> { //voor match???
       currentGame: {
         currentPlayers
       }
-    })
-  }
+    });
+  };
 
-  convertScoresInHTML = (scores: number[]) => { //kan eenvoudiger om html terug te geven??
+  convertScoresInHTML = (scores: number[]) => {
+    //kan eenvoudiger om html terug te geven??
     let totalScore = 0;
-    if (!scores) return
+    if (!scores) return;
     return scores.map((el: any) => {
       totalScore += el;
-      return <p key={el}>{totalScore}</p>
+      return <p key={el}>{totalScore}</p>;
     });
-  }
+  };
 
   renderScores = () => {
     const currentPlayers = this.state.currentGame.currentPlayers;
-    return Object.keys(currentPlayers).map((el: any) => <td key={el}>{this.convertScoresInHTML(currentPlayers[el].scores)}</td>);
-  }
+    return Object.keys(currentPlayers).map((el: any) => (
+      <td key={el}>{this.convertScoresInHTML(currentPlayers[el].scores)}</td>
+    ));
+  };
 
   // ScoreCalculator functies
 
   resetCurrentGame = () => {
     this.setState({
       currentGame: {
-        currentPlayers: {
-        }
+        currentPlayers: {}
       }
     });
-  }
+  };
 
   addScoresToLeaderboard = () => {
     const players = this.state.players;
@@ -217,7 +144,7 @@ class App extends React.Component<any> { //voor match???
     Object.keys(currentPlayers).map((el: any) => {
       console.log(el);
       console.log(this.totScore(el));
-      const amountOfGames = currentPlayers[el].amountOfGames
+      const amountOfGames = currentPlayers[el].amountOfGames;
       const score = this.totScore(el) + amountOfGames;
 
       if (players[el]) {
@@ -228,53 +155,57 @@ class App extends React.Component<any> { //voor match???
         players[el] = {
           totScore: score,
           gamesPlayed: amountOfGames
-        }
+        };
       }
-    })
+    });
     this.setState({
       players
     });
-  }
+  };
 
   setScoreInputsState = (id: string, value: any) => {
     const scoreCalcInputs = this.state.scoreCalcInputs;
-    scoreCalcInputs[id] = value
+    scoreCalcInputs[id] = value;
     this.setState({
       scoreCalcInputs
     });
-  }
+  };
 
   checkIfValid = () => {
     const typeInput = this.state.scoreCalcInputs.typeInput;
     const amount = this.state.points[typeInput].amountOfPlayers;
-    const goingPlayers = Object.keys(this.state.currentGame.currentPlayers).filter((el: any) => {
+    const goingPlayers = Object.keys(
+      this.state.currentGame.currentPlayers
+    ).filter((el: any) => {
       return this.state.currentGame.currentPlayers[el].going === true;
     });
-    if (goingPlayers.length === amount || amount === 'nvt') {
+    if (goingPlayers.length === amount || amount === "nvt") {
       return true;
     }
     console.log(typeInput, amount, goingPlayers);
     return false;
   };
 
-
   addScores = () => {
     //arrays maken met going en not going spelers
-    let goingPlayers: any = [];    //going players ook in state steken?
+    let goingPlayers: any = []; //going players ook in state steken?
     let notGoingPlayers: any = [];
     const currentPlayers = this.state.currentGame.currentPlayers;
-    Object.keys(currentPlayers).map((el: any) => {   //dubbele reduce?
-      this.state.currentGame.currentPlayers[el].going ? goingPlayers.push(el) : notGoingPlayers.push(el);
+    Object.keys(currentPlayers).map((el: any) => {
+      //dubbele reduce?
+      this.state.currentGame.currentPlayers[el].going
+        ? goingPlayers.push(el)
+        : notGoingPlayers.push(el);
     });
     //info over spel en uitkomst in vars steken
     const typeSpel = this.state.scoreCalcInputs.typeInput;
     const aantalSlagen = this.state.scoreCalcInputs.slagenInput;
     const isGeslaagd = this.state.scoreCalcInputs.geslaagdInput;
     //meerdere opties: spel waar aantal slagen van belang is of spel geslaagd of niet geslaagd
-    const results = this.state.points[typeSpel].results;
+    const results: any = points[typeSpel].results;
     // normaal spel
     let soloOrSamen: number;
-    goingPlayers.length === 2 ? soloOrSamen = 1 : soloOrSamen = 3;
+    goingPlayers.length === 2 ? (soloOrSamen = 1) : (soloOrSamen = 3);
     if (results.length === 14) {
       goingPlayers.map((el: any) => {
         currentPlayers[el].scores.push(results[aantalSlagen] * soloOrSamen);
@@ -285,7 +216,7 @@ class App extends React.Component<any> { //voor match???
       // specialekes
     } else {
       let geslaagd: number;
-      isGeslaagd === 'geslaagd' ? geslaagd = 1 : geslaagd = -1;
+      isGeslaagd === "geslaagd" ? (geslaagd = 1) : (geslaagd = -1);
       goingPlayers.map((el: any) => {
         currentPlayers[el].scores.push(results * soloOrSamen * geslaagd);
       });
@@ -301,7 +232,7 @@ class App extends React.Component<any> { //voor match???
         currentPlayers
       }
     });
-  }
+  };
 
   // Algemene functies
 
@@ -314,7 +245,7 @@ class App extends React.Component<any> { //voor match???
       acc += cur;
       return acc;
     });
-  }
+  };
 
   render() {
     return (
@@ -323,7 +254,8 @@ class App extends React.Component<any> { //voor match???
         <CurrentGame
           currentGame={this.state.currentGame}
           toggleNameGoing={this.toggleNameGoing}
-          renderScores={this.renderScores} />
+          renderScores={this.renderScores}
+        />
         <ScoreCalculator
           points={this.state.points}
           currentGame={this.state.currentGame}
