@@ -73,6 +73,8 @@ class App extends React.Component<any> {
     test: "ditistest"
   };
 
+  ref: RebaseBinding | null = null;
+
   componentDidMount() {
     const { params } = this.props.match;
     this.ref = base.syncState(`testttt`, {
