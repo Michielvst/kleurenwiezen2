@@ -4,7 +4,8 @@ import StartNewGame from "./StartNewGame";
 import ScoreCalculator from "./ScoreCalculator";
 import LeaderBoards from "./LeaderBoard";
 import { points } from "./types";
-import base from "./base";
+//import base from "./base";
+//import { RebaseBinding } from "re-base";
 
 interface IState {
   players: any;
@@ -73,15 +74,15 @@ class App extends React.Component<any> {
     test: "ditistest"
   };
 
-  ref: RebaseBinding | null = null;
+  //ref: RebaseBinding | null = null;
 
-  componentDidMount() {
-    const { params } = this.props.match;
-    this.ref = base.syncState(`testttt`, {
-      context: this,
-      state: "test"
-    });
-  }
+  //componentDidMount() {
+  //  const { params } = this.props.match;
+  //  this.ref = base.syncState(`${params.gameId}`, {
+  //    context: this,
+  //    state: "test"
+  //  });
+  //}
 
   // StartNewGame functies
 
