@@ -3,9 +3,11 @@ import { points } from "./types";
 
 interface Player {
   active: boolean;
-  amountOfGames: number;
   going: boolean;
   scores: number[];
+  stats: {
+    amountOfGames: number;
+  };
 }
 
 interface Props {
@@ -125,9 +127,9 @@ export default function ScoreCalc({
             {Object.keys(currentGame.currentPlayers).map(player => (
               <p key={player}>
                 {player}: Totaalscore {totScore(player)} + Participatiebonus{" "}
-                {currentGame.currentPlayers[player].amountOfGames} ={" "}
+                {currentGame.currentPlayers[player].stats.amountOfGames} ={" "}
                 {totScore(player) +
-                  currentGame.currentPlayers[player].amountOfGames}
+                  currentGame.currentPlayers[player].stats.amountOfGames}
               </p>
             ))}
           </div>

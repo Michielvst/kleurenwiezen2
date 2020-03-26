@@ -3,7 +3,7 @@ interface IProps {
   players: {
     [name: string]: {
       totScore: number;
-      gamesPlayed: number;
+      stats: { gamesPlayed: number };
     };
   };
 }
@@ -31,7 +31,7 @@ export default function LeaderBoard({ players }: IProps) {
           </td>
           <td>{el}</td>
           <td>{players[el].totScore}</td>
-          <td>{players[el].gamesPlayed}</td>
+          <td>{players[el].stats.gamesPlayed}</td>
         </tr>
       );
     });

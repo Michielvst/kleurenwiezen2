@@ -21,19 +21,31 @@ class App extends React.Component<any> {
     players: {
       Miguel: {
         totScore: 100,
-        gamesPlayed: 20
+        stats: {
+          gamesPlayed: 20,
+          alleSpellen: []
+        }
       },
       Jangen: {
         totScore: -50,
-        gamesPlayed: 22
+        stats: {
+          gamesPlayed: 25,
+          alleSpellen: []
+        }
       },
       Jarrku: {
         totScore: 56,
-        gamesPlayed: 9
+        stats: {
+          gamesPlayed: 26,
+          alleSpellen: []
+        }
       },
       Jengen: {
         totScore: -500,
-        gamesPlayed: 12
+        stats: {
+          gamesPlayed: 28,
+          alleSpellen: []
+        }
       }
     },
     currentGame: {
@@ -41,27 +53,39 @@ class App extends React.Component<any> {
         //tijdelijk als voorbeeld
         wim: {
           active: true,
-          amountOfGames: 0,
           going: false,
-          scores: [0, 7, -3]
+          scores: [0, 7, -3],
+          stats: {
+            amountOfGames: 0,
+            alleSpellenCurrent: []
+          }
         },
         jos: {
           active: true,
-          amountOfGames: 0,
           going: false,
-          scores: [0, -7, -3]
+          scores: [0, -7, -3],
+          stats: {
+            amountOfGames: 0,
+            alleSpellenCurrent: []
+          }
         },
         kak: {
           active: true,
-          amountOfGames: 0,
           going: false,
-          scores: [0, 7, 3]
+          scores: [0, 7, 3],
+          stats: {
+            amountOfGames: 0,
+            alleSpellenCurrent: []
+          }
         },
         dep: {
           active: true,
-          amountOfGames: 0,
           going: false,
-          scores: [0, -7, 3]
+          scores: [0, -7, 3],
+          stats: {
+            amountOfGames: 0,
+            alleSpellenCurrent: []
+          }
         }
         //tijdelijk als voorbeeld
       }
@@ -92,7 +116,10 @@ class App extends React.Component<any> {
         scores: [],
         going: false,
         active: true,
-        amountOfGames: 0
+        stats: {
+          amountOfGames: 0,
+          alleSpellenCurrent: []
+        }
       };
       return acc;
     }, {});
@@ -113,6 +140,15 @@ class App extends React.Component<any> {
       }
     });
   };
+
+  // Gespeeld spel toevoegen aan stats
+
+  addPlayedGameToStats = (
+    player: any,
+    type: any,
+    aantalSlagen: any,
+    geslaagd: any
+  ) => {};
 
   convertScoresInHTML = (scores: number[]) => {
     //kan eenvoudiger om html terug te geven??
@@ -150,17 +186,17 @@ class App extends React.Component<any> {
     Object.keys(currentPlayers).map((el: any) => {
       console.log(el);
       console.log(this.totScore(el));
-      const amountOfGames = currentPlayers[el].amountOfGames;
+      const amountOfGames = currentPlayers[el].stats.amountOfGames;
       const score = this.totScore(el) + amountOfGames;
 
       if (players[el]) {
         console.log(score, amountOfGames, players[el].amountOfGames);
         players[el].totScore += score;
-        players[el].gamesPlayed += amountOfGames;
+        players[el].stats.gamesPlayed += amountOfGames;
       } else {
         players[el] = {
           totScore: score,
-          gamesPlayed: amountOfGames
+          stats: { gamesPlayed: amountOfGames }
         };
       }
     });
@@ -231,7 +267,7 @@ class App extends React.Component<any> {
       });
     }
     Object.keys(currentPlayers).map((el: any) => {
-      currentPlayers[el].amountOfGames += 1;
+      currentPlayers[el].stats.amountOfGames += 1;
     });
     this.setState({
       currentGame: {

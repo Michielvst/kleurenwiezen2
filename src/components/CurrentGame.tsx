@@ -5,9 +5,11 @@ interface IProps {
     currentPlayers: {
       [name: string]: {
         active: boolean;
-        amountOfGames: number;
         going: boolean;
         scores: number[];
+        stats: {
+          amountOfGames: number;
+        };
       };
     };
   };
