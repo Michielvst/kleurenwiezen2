@@ -5,8 +5,6 @@ import ScoreCalculator from "./ScoreCalculator";
 import LeaderBoards from "./LeaderBoard";
 import { points } from "./types";
 import base from "../base";
-
-console.log(points);
 interface IState {
   players: any;
   currentGame: any;
@@ -123,7 +121,9 @@ class App extends React.Component<any> {
   renderScores = () => {
     const currentPlayers = this.state.currentGame.currentPlayers;
     return Object.keys(currentPlayers).map((el: any) => (
-      <td key={el}>{this.convertScoresInHTML(currentPlayers[el].scores)}</td>
+      <td key={Math.random()}>
+        {this.convertScoresInHTML(currentPlayers[el].scores)}
+      </td>
     ));
   };
 
@@ -173,7 +173,7 @@ class App extends React.Component<any> {
 
   checkIfValid = () => {
     const typeInput = this.state.scoreCalcInputs.typeInput;
-    const amount = this.state.points[typeInput].amountOfPlayers;
+    const amount = points[typeInput].amountOfPlayers;
     const goingPlayers = Object.keys(
       this.state.currentGame.currentPlayers
     ).filter((el: any) => {
@@ -257,7 +257,6 @@ class App extends React.Component<any> {
           renderScores={this.renderScores}
         />
         <ScoreCalculator
-          points={this.state.points}
           currentGame={this.state.currentGame}
           addScoresToLeaderboard={this.addScoresToLeaderboard}
           setScoreInputsState={this.setScoreInputsState}
