@@ -4,8 +4,8 @@ import StartNewGame from "./StartNewGame";
 import ScoreCalculator from "./ScoreCalculator";
 import LeaderBoards from "./LeaderBoard";
 import { points } from "./types";
-//import base from "./base";
-//import { RebaseBinding } from "re-base";
+import base from "./base";
+import { RebaseBinding } from "re-base";
 
 interface IState {
   players: any;
@@ -23,30 +23,30 @@ class App extends React.Component<any> {
         totScore: 100,
         stats: {
           gamesPlayed: 20,
-          alleSpellen: []
-        }
+          alleSpellen: [],
+        },
       },
       Jangen: {
         totScore: -50,
         stats: {
           gamesPlayed: 25,
-          alleSpellen: []
-        }
+          alleSpellen: [],
+        },
       },
       Jarrku: {
         totScore: 56,
         stats: {
           gamesPlayed: 26,
-          alleSpellen: []
-        }
+          alleSpellen: [],
+        },
       },
       Jengen: {
         totScore: -500,
         stats: {
           gamesPlayed: 28,
-          alleSpellen: []
-        }
-      }
+          alleSpellen: [],
+        },
+      },
     },
     currentGame: {
       currentPlayers: {
@@ -57,8 +57,8 @@ class App extends React.Component<any> {
           scores: [0, 7, -3],
           stats: {
             amountOfGames: 0,
-            alleSpellenCurrent: []
-          }
+            alleSpellenCurrent: [],
+          },
         },
         jos: {
           active: true,
@@ -66,8 +66,8 @@ class App extends React.Component<any> {
           scores: [0, -7, -3],
           stats: {
             amountOfGames: 0,
-            alleSpellenCurrent: []
-          }
+            alleSpellenCurrent: [],
+          },
         },
         kak: {
           active: true,
@@ -75,8 +75,8 @@ class App extends React.Component<any> {
           scores: [0, 7, 3],
           stats: {
             amountOfGames: 0,
-            alleSpellenCurrent: []
-          }
+            alleSpellenCurrent: [],
+          },
         },
         dep: {
           active: true,
@@ -84,29 +84,69 @@ class App extends React.Component<any> {
           scores: [0, -7, 3],
           stats: {
             amountOfGames: 0,
-            alleSpellenCurrent: []
-          }
-        }
+            alleSpellenCurrent: [],
+          },
+        },
         //tijdelijk als voorbeeld
-      }
+      },
     },
     scoreCalcInputs: {
       typeInput: "samen8",
       slagenInput: 0,
-      geslaagdInput: "geslaagd"
+      geslaagdInput: "geslaagd",
     },
-    test: "ditistest"
+    test: "currentGame",
   };
 
-  //ref: RebaseBinding | null = null;
+  ref: RebaseBinding | null = null;
 
-  //componentDidMount() {
-  //  const { params } = this.props.match;
-  //  this.ref = base.syncState(`${params.gameId}`, {
-  //    context: this,
-  //    state: "test"
-  //  });
-  //}
+  componentDidMount() {
+    const { params } = this.props.match;
+    this.ref = base.syncState(`${params.gameId}`, {
+      context: this,
+      state: "currentGame",
+      defaultValue: {
+        currentPlayers: {
+          wim: {
+            active: true,
+            going: false,
+            scores: [0, 7, -3],
+            stats: {
+              amountOfGames: 0,
+              alleSpellenCurrent: [],
+            },
+          },
+          jos: {
+            active: true,
+            going: false,
+            scores: [0, -7, -3],
+            stats: {
+              amountOfGames: 0,
+              alleSpellenCurrent: [],
+            },
+          },
+          kak: {
+            active: true,
+            going: false,
+            scores: [0, 7, 3],
+            stats: {
+              amountOfGames: 0,
+              alleSpellenCurrent: [],
+            },
+          },
+          dep: {
+            active: true,
+            going: false,
+            scores: [0, -7, 3],
+            stats: {
+              amountOfGames: 0,
+              alleSpellenCurrent: [],
+            },
+          },
+        },
+      },
+    });
+  }
 
   // StartNewGame functies
 
@@ -118,13 +158,13 @@ class App extends React.Component<any> {
         active: true,
         stats: {
           amountOfGames: 0,
-          alleSpellenCurrent: []
-        }
+          alleSpellenCurrent: [],
+        },
       };
       return acc;
     }, {});
     this.setState({
-      currentGame: { currentPlayers }
+      currentGame: { currentPlayers },
     });
   };
 
@@ -136,8 +176,8 @@ class App extends React.Component<any> {
     currentPlayers[name].going = !currentPlayers[name].going;
     this.setState({
       currentGame: {
-        currentPlayers
-      }
+        currentPlayers,
+      },
     });
   };
 
@@ -174,8 +214,8 @@ class App extends React.Component<any> {
   resetCurrentGame = () => {
     this.setState({
       currentGame: {
-        currentPlayers: {}
-      }
+        currentPlayers: {},
+      },
     });
   };
 
@@ -196,12 +236,12 @@ class App extends React.Component<any> {
       } else {
         players[el] = {
           totScore: score,
-          stats: { gamesPlayed: amountOfGames }
+          stats: { gamesPlayed: amountOfGames },
         };
       }
     });
     this.setState({
-      players
+      players,
     });
   };
 
@@ -209,7 +249,7 @@ class App extends React.Component<any> {
     const scoreCalcInputs = this.state.scoreCalcInputs;
     scoreCalcInputs[id] = value;
     this.setState({
-      scoreCalcInputs
+      scoreCalcInputs,
     });
   };
 
@@ -271,8 +311,8 @@ class App extends React.Component<any> {
     });
     this.setState({
       currentGame: {
-        currentPlayers
-      }
+        currentPlayers,
+      },
     });
   };
 
