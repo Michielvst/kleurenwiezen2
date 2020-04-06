@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import GamePicker from './GamePicker'
-import App from './App';
-import NotFound from './NotFound';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import GamePicker from "./GamePicker";
+import App from "./App";
+import NotFound from "./NotFound";
 
 const Router = () => (
   <BrowserRouter>
