@@ -30,7 +30,7 @@ interface Props {
 
 enum GameType {
   SLAGEN,
-  WIN_OR_LOSE
+  WIN_OR_LOSE,
 }
 
 export default function ScoreCalc({
@@ -40,7 +40,7 @@ export default function ScoreCalc({
   resetCurrentGame,
   setScoreInputsState,
   totScore,
-  currentGame
+  currentGame,
 }: Props) {
   const [typeOfGame, setTypeGame] = React.useState(GameType.SLAGEN);
   const [chosenGame, setChosenGame] = React.useState(Object.keys(points)[0]);
@@ -49,7 +49,9 @@ export default function ScoreCalc({
   function submitScores(e: React.FormEvent) {
     e.preventDefault();
     if (!checkIfValid()) {
-      window.alert("Aantal spelers klopt niet!");
+      window.alert(
+        "Aantal spelers klopt niet! Klik op de spelersnamen om aan te duiden wie gaat!"
+      );
       return;
     }
     addScores();
@@ -84,7 +86,7 @@ export default function ScoreCalc({
       </a>
       <form className="scoreCalc" onSubmit={submitScores}>
         <select onChange={handleTypeChange} value={chosenGame}>
-          {Object.keys(points).map(el => (
+          {Object.keys(points).map((el) => (
             <option value={el} key={el}>
               {el}
             </option>
@@ -96,14 +98,14 @@ export default function ScoreCalc({
             min={0}
             max={13}
             defaultValue={0}
-            onChange={e =>
+            onChange={(e) =>
               setScoreInputsState("slagenInput", e.currentTarget.value)
             }
           ></input>
         )}
         {typeOfGame === GameType.WIN_OR_LOSE && (
           <select
-            onChange={e =>
+            onChange={(e) =>
               setScoreInputsState("geslaagdInput", e.currentTarget.value)
             }
           >
@@ -124,7 +126,7 @@ export default function ScoreCalc({
             x
           </button>
           <div>
-            {Object.keys(currentGame.currentPlayers).map(player => (
+            {Object.keys(currentGame.currentPlayers).map((player) => (
               <p key={player}>
                 {player}: Totaalscore {totScore(player)} + Participatiebonus{" "}
                 {currentGame.currentPlayers[player].stats.amountOfGames} ={" "}

@@ -20,7 +20,7 @@ interface IProps {
 export default function CurrentGame2({
   currentGame,
   toggleNameGoing,
-  renderScores
+  renderScores,
 }: IProps) {
   return (
     <>
@@ -42,7 +42,7 @@ export default function CurrentGame2({
           </tr>
         </thead>
         <tbody>
-          <tr>{renderScores()}</tr>
+          <tr key={Math.random()}>{renderScores()}</tr>
         </tbody>
       </table>
     </>
