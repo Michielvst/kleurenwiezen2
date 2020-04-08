@@ -49,7 +49,7 @@ const playersState = {
 const currentGameState = {
   currentPlayers: {
     //tijdelijk als voorbeeld
-    wim: {
+    Jengen: {
       active: true,
       going: false,
       scores: [0, 7, -3],
@@ -58,7 +58,7 @@ const currentGameState = {
         alleSpellenCurrent: [],
       },
     },
-    jos: {
+    Jonas: {
       active: true,
       going: false,
       scores: [0, -7, -3],
@@ -67,7 +67,7 @@ const currentGameState = {
         alleSpellenCurrent: [],
       },
     },
-    kak: {
+    Miguel: {
       active: true,
       going: false,
       scores: [0, 7, 3],
@@ -76,7 +76,7 @@ const currentGameState = {
         alleSpellenCurrent: [],
       },
     },
-    dep: {
+    Jarrku: {
       active: true,
       going: false,
       scores: [0, -7, 3],
